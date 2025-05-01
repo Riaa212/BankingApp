@@ -1,0 +1,35 @@
+#find all user birth year 2002
+select * from user_entity
+where dob like '2007%' and dob like '%31' and dob like '%01%';
+
+o/p--->
+24	User	53369 Terry Mountains, Kautzerhaven, ND 30154	2007-01-31	Stephen@gmail.com		1	503-464-7413 x303	lt	https://picsum.photos/200/300?random=47142	Brooks Flatley
+
+================================================================================================================
+Indexing:
+================================================================================================================
+-->Index syntax:
+  -create index userdob(index_name) on user_entity(dob);
+
+-->View created Index:
+ -show index from user_entity(table_name);
+
+--->Drop Index:
+  -drop index useremail(index_name) on user_entity(table_name);
+
+-->Alter table:
+  1.Add column:
+   ALTER TABLE Customers
+   ADD Email varchar(255);
+  
+  2.Drop column:
+   ALTER TABLE Customers
+   DROP COLUMN Email;
+ 
+  3.rename column:
+  ALTER TABLE table_name
+  RENAME COLUMN old_name to new_name;
+
+  4.modify column data type:
+   ALTER TABLE table_name
+   MODIFY COLUMN column_name datatype;
