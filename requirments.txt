@@ -1,0 +1,143 @@
+Banking App:
+
+====================================================================================================
+->FUNCTIONAL REQUIRMENTS:
+====================================================================================================
+
+  1.User Authentication:
+	-Users should be able to create an account (register).
+	-Users should be able to log in and log out securely.
+	-Forgot password functionality to reset passwords via email or OTP.
+
+  2.Account Management:
+    -Users can view their account balance and transaction history.
+	-Users can update their profile details (name, address, etc.).
+	-Users can manage security settings (e.g., change password, enable 2FA).
+
+
+  3.Funds Transfer:
+	-Users can transfer money between their own accounts (internal transfers).
+	-Users can transfer money to another user (external transfers).
+	-Users should be able to check transfer status and history.
+	
+  4.Transaction History:
+	-Users can view all past transactions, including deposits, withdrawals, and transfers.
+	-Users can filter transaction history by date, type, and amount.
+
+====================================================================================================
+->USE-CASE:
+====================================================================================================
+	Login Use Case: A user logs into the app with their username and password, with an option to 
+					recover the password if forgotten.
+
+	Transfer Funds Use Case: A user initiates a fund transfer by selecting the recipient, entering
+					the amount, and confirming the transfer via OTP or PIN.
+					
+
+====================================================================================================
+->MODELS:
+====================================================================================================
+1.User-Model:
+	id (int) – Unique identifier for the user (Primary Key).
+	firstName (String) – First name of the user.
+	lastName (String) – Last name of the user.
+	email (String) – Email address (used for login).
+	password (String) – Hashed password.
+	phoneNumber (String) – Contact number.
+	address (String) – User's address.
+	dob (Date) – Date of birth.
+	createdAt (Date) – Account creation date.	
+	updatedAt (Date) – Last updated date.
+	status (Enum: ACTIVE, INACTIVE) – The current status of the user.
+
+
+#Relationships:
+	One-to-many relationship with Account (A user can have multiple bank accounts).
+	One-to-many relationship with Transaction (A user can have multiple transactions).
+
+2.Account Model:
+	id (int) – Unique identifier for the account (Primary Key).
+	userId (int) – Foreign key referring to the User who owns the account.
+	accountNumber (String) – Unique account number.
+	accountType (Enum: SAVINGS, CURRENT) – Type of bank account.
+	balance (Decimal) – The current balance in the account.
+	branch (String) – Branch name of the account.
+	status (Enum: ACTIVE, INACTIVE) – Account status.
+	createdAt (Date) – Account creation date.
+	updatedAt (Date) – Last updated date.
+
+#Relationships:
+	Many-to-one relationship with User (An account belongs to a single user).
+	One-to-many relationship with Transaction (An account will have many transactions).
+
+3.Transaction Model:
+	id (int) – Unique identifier for the transaction (Primary Key).
+	senderAccountId (int) – Foreign key referring to the sender's account (if applicable).
+	receiverAccountId (int) – Foreign key referring to the receiver's account (if applicable).
+	amount (Decimal) – Amount of money involved in the transaction.
+	transactionType (Enum: DEPOSIT, WITHDRAWAL, TRANSFER) – Type of transaction.
+	status (Enum: SUCCESS, FAILED) – The status of the transaction.
+	transactionDate (Date) – The date the transaction occurred.
+	description (String) – A description of the transaction (e.g., "ATM Withdrawal" or "Transfer to John").
+	createdAt (Date) – When the transaction record was created.
+	updatedAt (Date) – When the transaction record was last updated.
+	
+#Relationships:
+	Many-to-one relationship with Account (A transaction involves one or more accounts).
+	Many-to-one relationship with User (A transaction is associated with users).
+	
+4.Bank  Branch Model:
+
+	id (int) – Unique identifier for the bank branch.
+	branchName (String) – Name of the bank branch.
+	branchAddress (String) – Address of the bank branch.
+	contactNumber (String) – Phone number of the branch.
+	createdAt (Date) – Branch creation date.
+	updatedAt (Date) – Last updated date.
+	
+#Relationships:
+	One-to-many relationship with Account (A branch can serve multiple accounts).
+
+5.Card Model:
+	
+	id (int) – Unique identifier for the card.
+	cardNumber (String) – Unique card number.			
+	expiryDate (Date) – Expiry date of the card.
+	cvv (String) – CVV number on the card.
+	accountId (int) – Foreign key referring to the account linked with the card.
+	cardType (Enum: DEBIT, CREDIT) – Type of card (Debit or Credit).
+	status (Enum: ACTIVE, INACTIVE) – Current status of the card.
+	createdAt (Date) – When the card was created.
+	updatedAt (Date) – When the card was last updated.
+
+#Relationships:
+	Many-to-one relationship with Account (A card is linked to a specific account).
+	
+6.Authentication Model:
+	
+	id (int) – Unique identifier for the authentication record.
+	userId (int) – Foreign key referring to the user.
+	passwordHash (String) – The hashed password.
+	jwtToken (String) – The JWT token issued after successful login.
+	lastLogin (Date) – The last time the user logged in.
+	createdAt (Date) – When the authentication record was created.
+
+#Relationships:
+	One-to-one relationship with User (Each user has one set of authentication details).
+
+7. Audit Log Model (Optional):
+	
+	id (int) – Unique identifier for the log.
+	userId (int) – Foreign key referring to the user who performed the action.
+	action (String) – A description of the action (e.g., "Account Updated").
+	timestamp (Date) – The time the action occurred.
+	ipAddress (String) – IP address of the user.
+	createdAt (Date) – When the log record was created.
+	
+	
+=======================================================================================================================================
+Microservices:
+1.BankService
+2.AuthenticationService
+3.UserService
+4.PaymentService
