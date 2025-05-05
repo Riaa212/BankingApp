@@ -1,5 +1,16 @@
 package com.bank.app.repository;
 
-public interface UserRepo {
+import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.bank.app.domain.UserEntity;
+
+import jakarta.transaction.Transactional;
+
+public interface UserRepo extends JpaRepository<UserEntity,Integer>
+{
+
+	@Transactional
+	Optional<UserEntity> findByEmail(String email);
 }

@@ -1,5 +1,83 @@
 package com.bank.app.service.impl;
 
-public class UserServiceImpl {
+import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bank.app.domain.UserEntity;
+import com.bank.app.enums.StatusEnum;
+import com.bank.app.helper.Utils;
+import com.bank.app.proxy.UserProxy;
+import com.bank.app.repository.UserRepo;
+import com.bank.app.service.UserService;
+
+@Service
+public class UserServiceImpl implements UserService{
+
+
+	@Autowired
+	private Utils helper;
+	
+	@Autowired
+	private UserRepo userRepo;
+	
+	
+	@Override
+	public List<UserProxy> getAllUsers() {
+		
+		
+		List<UserEntity> users = userRepo.findAll();
+		return helper.convertList(users, UserProxy.class);
+	}
+
+	
+	@Override
+	public String createUser(UserProxy user) {
+		System.err.println(user);
+		
+		Optional<UserEntity> byEmail = userRepo.findByEmail(user.getEmail());
+		
+		if(byEmail.isPresent())
+		{
+			return "email already taken";
+		}
+		
+		user.setStatus(StatusEnum.Active);
+		userRepo.save(helper.convert(user, UserEntity.class));
+		return "user Register successfully";
+	}
+
+	@Override
+	public String updateUser(UserProxy user, Integer id) {
+		Optional<UserEntity> userById = userRepo.findById(id);
+		if(userById.isPresent())
+		{
+			UserEntity userEntity = userById.get();
+			userEntity.setFirstName(user.getFirstName());
+			userEntity.setLastName(user.getLastName());
+			userEntity.setEmail(user.getEmail());
+			userEntity.setDob(user.getDob());
+			userEntity.setPhoneNumber(user.getPhoneNumber());
+			userEntity.setAddress(user.getAddress());
+			userRepo.save(userEntity);
+			return "user updated successfully";
+		}
+		return "something went wrong";
+	}
+
+	@Override
+	public String deleteUserById(Integer userId) {
+		Optional<UserEntity> byId = userRepo.findById(userId);
+		if(byId.isPresent())
+		{
+			UserEntity userEntity = byId.get();
+			userRepo.delete(userEntity);
+			return "user deleted successfully";
+		}
+		return "something went wrong";
+	}
+
+	
 }

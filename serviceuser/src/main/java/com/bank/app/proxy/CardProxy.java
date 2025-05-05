@@ -3,7 +3,6 @@ package com.bank.app.proxy;
 import java.time.LocalDate;
 
 import com.bank.app.domain.Accounts;
-import com.bank.app.domain.Card;
 import com.bank.app.enums.CardTypeEnum;
 import com.bank.app.enums.StatusEnum;
 

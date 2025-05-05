@@ -1,6 +1,9 @@
 package com.bank.app.proxy;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import com.bank.app.domain.Accounts;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,4 +21,6 @@ public class BankBranchProxy {
 	
 	private LocalDate createdAt;
 	private LocalDate updatedAt;
+	
+	private List<Accounts> accounts;
 }
