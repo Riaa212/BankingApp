@@ -1,11 +1,16 @@
 package com.bank.app.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.bank.app.enums.StatusEnum;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -35,8 +40,13 @@ public class UserEntity {
 	private String phoneNumber;
 	private String address;
 	private LocalDate dob;
-	private LocalDate createdAt;
-	private LocalDate updatedAt;
+
+	@CreationTimestamp
+	@Column(nullable = false, updatable = false)
+	private LocalDateTime createdAt;
+	
+	@UpdateTimestamp
+	private LocalDateTime updatedAt;
 	
 	@Enumerated(EnumType.STRING)
 	private StatusEnum status;
@@ -52,9 +62,9 @@ public class UserEntity {
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id")
 	private List<Transactions> transcations;
-	
-//	One-to-many relationship with Account (A user can have multiple bank accounts).
-//	One-to-many relationship with Transaction (A user can have multiple transactions)
+
+ //	One-to-many relationship with Account (A user can have multiple bank accounts).
+ //	One-to-many relationship with Transaction (A user can have multiple transactions)
 	
 }
 

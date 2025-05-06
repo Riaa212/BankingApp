@@ -24,6 +24,7 @@ public class BankBranchServiceImpl implements BankBranchService
 	
 	@Override
 	public String createBankBranch(BankBranchProxy bankBranch) {
+		System.err.println(bankBranch);
 		branchRepo.save(helper.convert(bankBranch,BankBranch.class));
 		return "bank branch register successfully";
 	}
@@ -50,16 +51,30 @@ public class BankBranchServiceImpl implements BankBranchService
 	public String updateBankBranch(BankBranchProxy bankBranch, Integer bid) {
 		
 		Optional<BankBranch> byId = branchRepo.findById(bid);
+		System.err.println(bankBranch+"\n"+byId);
 		if(byId.isPresent())
 		{
-			BankBranch bankBranchObj = byId.get();
-			bankBranchObj.setBranchName(bankBranch.getBranchName());
-			bankBranchObj.setBranchAddress(bankBranch.getBranchAddress());
-			bankBranchObj.setContactNumber(bankBranch.getContactNumber());
-			bankBranchObj.setAccounts(bankBranch.getAccounts());
-			
-			branchRepo.save(bankBranchObj);
-			return "bank branch details updated successfully";
+				BankBranch bankBranchObj = byId.get();
+	
+				if(bankBranch.getBranchName()!=null)
+				{
+					
+					bankBranchObj.setBranchName(bankBranch.getBranchName());	
+				}
+				if(bankBranch.getContactNumber()!=null)
+				{
+					
+					bankBranchObj.setContactNumber(bankBranch.getContactNumber());	
+				}
+				
+				if(bankBranch.getBranchName()!=null)
+				{
+					
+					bankBranchObj.setBranchName(bankBranch.getBranchName());	
+				}
+					
+				branchRepo.save(bankBranchObj);	
+				return "bank branch details updated successfully";
 		}
 		return "something went wrong";
 	}

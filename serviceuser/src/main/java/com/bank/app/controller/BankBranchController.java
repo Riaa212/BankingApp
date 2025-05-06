@@ -20,15 +20,17 @@ public class BankBranchController {
 	@Autowired
 	private BankBranchServiceImpl branchService;
 	
-	@PostMapping("/create")
+	//create bank branch
+	@PostMapping("/create") //working
 	public ResponseEntity<?> createBankBranch(@RequestBody BankBranchProxy branch)
 	{
 		return ResponseEntity.status(HttpStatus.CREATED).body(branchService.createBankBranch(branch));
 	}
 	
-	@PutMapping("/update/{bid}")
+	//update bank branch
+	@PutMapping("/update/{bid}") 
 	public ResponseEntity<?> updateBankBranch(@RequestBody BankBranchProxy branch,@PathVariable Integer bid)
 	{
-		return ResponseEntity.status(HttpStatus.CREATED).body(branchService);
+		return ResponseEntity.status(HttpStatus.OK).body(branchService.updateBankBranch(branch, bid));
 	}
 }

@@ -13,34 +13,26 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class BankBranch {
+public class Bank {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String branchName;
-	private String branchAddress;
-	private String contactNumber;
+	private String bankName;
+	//private String bankCode;
+		
+	//one bank can have many branch
 	
-//	@OneToMany(cascade=CascadeType.ALL)
-//	@JoinColumn(name="bank_id")
-//	private List<BankBranch> bankBranch;
 	
-//	@ManyToOne(cascade=CascadeType.MERGE)
-	@ManyToOne(cascade=CascadeType.MERGE)
-	@JoinColumn(name="bank_id")
-	private Bank bank;
-	
-//	private String branchCode;
 	
 	@CreationTimestamp
 	@Column(nullable = false, updatable = false)
@@ -50,11 +42,4 @@ public class BankBranch {
 	private LocalDateTime updatedAt;
 	
 	
-	
-//	A branch can serve multiple accounts
-//	@OneToMany(cascade=CascadeType.ALL)
-//	@JoinColumn(name="bank_id")
-//	private List<Accounts> accounts;
-	
-//	One-to-many relationship with Account (A branch can serve multiple accounts).
 }

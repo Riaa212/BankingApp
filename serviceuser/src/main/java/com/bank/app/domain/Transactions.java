@@ -2,9 +2,13 @@ package com.bank.app.domain;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.bank.app.enums.TransactionStatus;
 import com.bank.app.enums.TransactionType;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -43,7 +47,11 @@ public class Transactions {
 	
 	private String description;
 	
+	@CreationTimestamp
+	@Column(nullable = false, updatable = false)
 	private LocalDate createdAt;
+	
+	@UpdateTimestamp
 	private LocalDate updatedAt;
 	
 	

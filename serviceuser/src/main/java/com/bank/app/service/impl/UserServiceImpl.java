@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bank.app.domain.UserEntity;
 import com.bank.app.enums.StatusEnum;
+import com.bank.app.helper.AccNumberGenerator;
 import com.bank.app.helper.Utils;
 import com.bank.app.proxy.UserProxy;
 import com.bank.app.repository.UserRepo;
@@ -23,6 +24,9 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserRepo userRepo;
 	
+	
+	@Autowired
+	private AccNumberGenerator accGen;
 	
 	@Override
 	public List<UserProxy> getAllUsers() {
@@ -44,7 +48,15 @@ public class UserServiceImpl implements UserService{
 			return "email already taken";
 		}
 		
+		//set account status active
 		user.setStatus(StatusEnum.Active);
+		
+		//generate account number 
+		user.getAccounts().stream().forEach(a->
+		{
+		a.setAccountNumber(accGen.generateAccountNumber());
+		a.setBalance(0.0);
+		});
 		userRepo.save(helper.convert(user, UserEntity.class));
 		return "user Register successfully";
 	}

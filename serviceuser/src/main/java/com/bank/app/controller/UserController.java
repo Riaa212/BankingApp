@@ -25,7 +25,6 @@ public class UserController {
 	@GetMapping("/getAll")
 	public ResponseEntity<?> getAllUsers()
 	{
-		
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.getAllUsers());
 	}
 	
@@ -48,4 +47,6 @@ public class UserController {
 	{
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.updateUser(user, userId));
 	}
+	
+	
 }

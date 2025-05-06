@@ -68,5 +68,19 @@ public class AccountServiceImpl implements AccountService
 		accRepo.save(helper.convert(account, Accounts.class));
 		return "account created successfully";
 	}
+	
+	public AccountProxy getUserByAccountNum(String accNo)
+	{
+		Optional<Accounts> byAccountNumber = accRepo.findByAccountNumber(accNo);
+		if(byAccountNumber.isPresent())
+		{
+			
+			Accounts accounts = byAccountNumber.get();
+			
+			System.err.println(accounts);
+			return helper.convert(accounts, AccountProxy.class);
+		}
+		return null;
+	}
 
 }
