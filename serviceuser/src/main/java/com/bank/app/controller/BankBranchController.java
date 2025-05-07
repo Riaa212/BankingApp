@@ -3,6 +3,7 @@ package com.bank.app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,4 +34,12 @@ public class BankBranchController {
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(branchService.updateBankBranch(branch, bid));
 	}
+	
+	//update bank branch
+	@GetMapping("/getAllBranch") 
+	public ResponseEntity<?> getAllBankBranch()
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(branchService.getAllBranchByBankName(null));
+	}
+	
 }

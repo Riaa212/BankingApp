@@ -6,10 +6,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bank.app.domain.Bank;
 import com.bank.app.domain.BankBranch;
 import com.bank.app.helper.Utils;
 import com.bank.app.proxy.BankBranchProxy;
 import com.bank.app.repository.BankBranchRepo;
+import com.bank.app.repository.BankRepo;
 import com.bank.app.service.BankBranchService;
 
 @Service
@@ -21,6 +23,9 @@ public class BankBranchServiceImpl implements BankBranchService
 
 	@Autowired
 	private BankBranchRepo branchRepo;
+	
+	@Autowired
+	private BankRepo bankRepo;
 	
 	@Override
 	public String createBankBranch(BankBranchProxy bankBranch) {
@@ -77,6 +82,17 @@ public class BankBranchServiceImpl implements BankBranchService
 				return "bank branch details updated successfully";
 		}
 		return "something went wrong";
+	}
+	
+	public List<BankBranchProxy> getAllBranchByBankName(String bank)
+	{
+		Optional<Bank> byBankName = bankRepo.findByBankName(bank);
+		
+		if(byBankName.isPresent())
+		{
+			System.err.println(byBankName);
+		}
+		return null;
 	}
 
 }

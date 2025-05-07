@@ -47,7 +47,7 @@ public class Accounts {
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="bank_id")
 	private Bank bank; 
 	
