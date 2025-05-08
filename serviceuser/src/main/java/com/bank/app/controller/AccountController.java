@@ -38,7 +38,6 @@ public class AccountController {
 	@Autowired
 	private TransactionServiceImpl transService;
 	
-	
 	@PostMapping("/create") //working
 	public ResponseEntity<?> createAccount(@RequestBody AccountProxy account)
 	{
@@ -66,9 +65,24 @@ public class AccountController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(accGen.generateAccountNumber());
 	}
 	
-	@PostMapping("/getUserByAcc/{accNo}")
-	public ResponseEntity<?> getuserByAccNum(@PathVariable String accNo)
+	@PostMapping("/getUserByAcc/{accNo}/{userId}")
+	public ResponseEntity<?> getuserByAccNum(@PathVariable String accNo,@PathVariable Integer userId)
 	{
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(acc.getUserByAccountNum(accNo));
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(acc.getUserByAccountNum(accNo,userId));
 	}
+	
+	//get total balance by account number
+	@PostMapping("/getTotalBalance/{accNo}")
+	public ResponseEntity<?> getTotalBalance(@PathVariable String accNo)
+	{
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(acc.totalBalance(accNo));
+	}
+	
+	@GetMapping("/getAllAccount")
+	public ResponseEntity<?> getallAcc()
+	{
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(acc.getAllAccounts());
+	}
+	
+	
 }

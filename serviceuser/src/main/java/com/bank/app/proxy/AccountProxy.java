@@ -2,6 +2,7 @@ package com.bank.app.proxy;
 
 import java.time.LocalDate;
 
+import com.bank.app.domain.Bank;
 import com.bank.app.enums.AccountTypeEnum;
 import com.bank.app.enums.StatusEnum;
 
@@ -18,12 +19,12 @@ public class AccountProxy {
 	private String accountNumber;
 	private AccountTypeEnum accountType;
 	private Double balance;
-	private String branch;
+//	private String branch;
 	private StatusEnum accstatus;
 	private LocalDate createdAt;
 	private LocalDate updatedAt;
 	
-	
+	private Bank bank; 
 //	Many-to-one relationship with User (An account belongs to a single user).
 //	One-to-many relationship with Transaction (An account will have many transactions).
 }

@@ -1,7 +1,9 @@
 package com.bank.app.service.impl;
 
+import java.awt.datatransfer.SystemFlavorMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,9 +36,13 @@ public class BankBranchServiceImpl implements BankBranchService
 		return "bank branch register successfully";
 	}
 
+	//delete bank branch
 	@Override
 	public String deleteBankBranch(Integer branchId) {
+//		bankRepo.findByBankName(null);
+		
 		Optional<BankBranch> byId = branchRepo.findById(branchId);
+		
 		if(byId.isPresent())
 		{
 			BankBranch bankBranch = byId.get();
@@ -46,12 +52,14 @@ public class BankBranchServiceImpl implements BankBranchService
 		return "something went wrong";
 	}
 
+	
 	@Override
 	public List<BankBranchProxy> getAllBankBranch() {
 		List<BankBranch> all = branchRepo.findAll();
 		return helper.convertList(all, BankBranchProxy.class);
 	}
 
+	
 	@Override
 	public String updateBankBranch(BankBranchProxy bankBranch, Integer bid) {
 		
@@ -84,15 +92,48 @@ public class BankBranchServiceImpl implements BankBranchService
 		return "something went wrong";
 	}
 	
+	//get all branch of bank by bank name
 	public List<BankBranchProxy> getAllBranchByBankName(String bank)
 	{
 		Optional<Bank> byBankName = bankRepo.findByBankName(bank);
 		
 		if(byBankName.isPresent())
 		{
-			System.err.println(byBankName);
+			Bank bankObj = byBankName.get();
+//			System.err.println("bank name==="+bankObj.getBankName());
+//			System.err.println("bank name==="+bankObj.getId());
+			
+			//get all branches
+			List<BankBranch> all = branchRepo.findAll();
+//			System.err.println("\nAll branch==="+all);
+			
+			//filter the bank branches
+			List<BankBranch> bankBranch = all.stream().filter(a->a.getBank().getId()==bankObj.getId()).collect(Collectors.toList());
+			
+			System.err.println("Result===>"+bankBranch);
+			return helper.convertList(bankBranch, BankBranchProxy.class);
+			
 		}
 		return null;
 	}
+	
+	//get all branch by bank id
+	public List<BankBranchProxy> getBranchByBankId(Integer bid)
+	{
+		List<BankBranch> all = branchRepo.findAll();
+		
+		//System.err.println(all);
+		
+		List<BankBranch> collect = all.stream().filter(a->a.getBank().getId().equals(bid)).collect(Collectors.toList());
+		
+//		System.out.println("all branch:"+collect);
+	
+		return helper.convertList(collect, BankBranchProxy.class);
+	}
 
+	public String deleteBrachById(Integer branchId)
+	{
+		branchRepo.deleteById(branchId);
+		return "branch deleted successfully";
+	}
 }

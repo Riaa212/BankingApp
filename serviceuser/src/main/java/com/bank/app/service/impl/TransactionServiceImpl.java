@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bank.app.domain.Accounts;
+import com.bank.app.domain.Transactions;
 import com.bank.app.helper.Utils;
 import com.bank.app.repository.AccountRepo;
+import com.bank.app.repository.TransactionRepo;
 import com.bank.app.service.TransactionService;
 
 @Service
@@ -20,21 +22,32 @@ public class TransactionServiceImpl implements TransactionService
 	@Autowired
 	private AccountRepo accRepo; 
 	
+	@Autowired
+	private TransactionRepo transRepo;
+	
 	//deposit 
 	@Override
 	public String deposit(Double amount, String accNumber) {
+		
 		Optional<Accounts> byAccountNumber = accRepo.findByAccountNumber(accNumber);
 	
 		if(byAccountNumber.isPresent())
 		{
 			Accounts accounts = byAccountNumber.get();
+			
+//			System.out.println("account data:"+accounts);
+			
+			Transactions trans=new Transactions();
+			
 			if(amount>0)
 			{
 				amount+=accounts.getBalance();
-				System.err.println("amount=="+amount+"\n"+accounts);
+
+				//System.err.println("amount=="+amount+"\n"+accounts);
 				accounts.setBalance(amount);
+//				trans.setSenderAccountId(accounts.getId());
 				accRepo.save(accounts);
-				System.err.println("amount=="+amount+"\n"+accounts);
+//				System.err.println("amount=="+amount+"\n"+accounts);
 				return "amount deposit successfully \n Total Balance:"+amount;
 			}
 			else

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bank.app.domain.UserEntity;
 import com.bank.app.enums.StatusEnum;
+import com.bank.app.exceptionHandling.UserNotFound;
 import com.bank.app.helper.AccNumberGenerator;
 import com.bank.app.helper.Utils;
 import com.bank.app.proxy.UserProxy;
@@ -64,6 +65,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public String updateUser(UserProxy user, Integer id) {
 		Optional<UserEntity> userById = userRepo.findById(id);
+		
 		if(userById.isPresent())
 		{
 			UserEntity userEntity = userById.get();
@@ -76,6 +78,7 @@ public class UserServiceImpl implements UserService{
 			userRepo.save(userEntity);
 			return "user updated successfully";
 		}
+//		 throw new UserNotFound("user not found","404");
 		return "something went wrong";
 	}
 
@@ -90,6 +93,4 @@ public class UserServiceImpl implements UserService{
 		}
 		return "something went wrong";
 	}
-
-	
 }

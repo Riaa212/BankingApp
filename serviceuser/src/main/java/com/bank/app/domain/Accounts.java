@@ -56,7 +56,6 @@ public class Accounts {
 //	@JoinColumn(name="branch_id")
 //	private BankBranch bank;
 	
-	
 //	Many-to-one relationship with User (An account belongs to a single user).
 //	One-to-many relationship with Transaction (An account will have many transactions).
 }

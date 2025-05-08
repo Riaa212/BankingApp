@@ -29,17 +29,30 @@ public class BankBranchController {
 	}
 	
 	//update bank branch
-	@PutMapping("/update/{bid}") 
+	@PutMapping("/update/{bid}")  //working
 	public ResponseEntity<?> updateBankBranch(@RequestBody BankBranchProxy branch,@PathVariable Integer bid)
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(branchService.updateBankBranch(branch, bid));
 	}
 	
 	//update bank branch
-	@GetMapping("/getAllBranch") 
-	public ResponseEntity<?> getAllBankBranch()
+	@GetMapping("/getAllBranch/{bankName}")  //working
+	public ResponseEntity<?> getAllBankBranch(@PathVariable String bankName)
 	{
-		return ResponseEntity.status(HttpStatus.OK).body(branchService.getAllBranchByBankName(null));
+		return ResponseEntity.status(HttpStatus.OK).body(branchService.getAllBranchByBankName(bankName));
+	}
+	
+	//get all branch of bank  by bank name
+	@GetMapping("/getBranchById/{bankName}") //working 
+	public ResponseEntity<?> getBranchByBankId(@PathVariable Integer bankName)
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(branchService.getBranchByBankId(bankName));
+	}
+
+	@GetMapping("/deleteBranchById/{branchId}") //working 
+	public ResponseEntity<?> deleteBankBranchById(@PathVariable Integer branchId)
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(branchService.deleteBankBranch(branchId));
 	}
 	
 }

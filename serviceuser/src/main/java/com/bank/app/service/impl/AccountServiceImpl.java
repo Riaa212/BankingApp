@@ -3,6 +3,7 @@ package com.bank.app.service.impl;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,18 +70,40 @@ public class AccountServiceImpl implements AccountService
 		return "account created successfully";
 	}
 	
-	public AccountProxy getUserByAccountNum(String accNo)
+	public List<AccountProxy> getUserByAccountNum(String accNo,Integer userId)
 	{
 		Optional<Accounts> byAccountNumber = accRepo.findByAccountNumber(accNo);
+		
+		List<UserEntity> userlst = userRepo.findAll();
+//		System.out.println(userlst);
+
+		Optional<UserEntity> byId = userRepo.findById(userId);
+		List<Accounts> collect=null;
+		if(byId.isPresent())
+		{
+			UserEntity userEntity = byId.get();
+//			System.err.println("======="+userEntity);
+			collect = userEntity.
+			getAccounts().
+			stream().
+			filter(a->a.getAccountNumber().equals(accNo)).collect(Collectors.toList());
+			System.err.println("Account Details=="+collect);
+		}
+		
 		if(byAccountNumber.isPresent())
 		{
-			
 			Accounts accounts = byAccountNumber.get();
 			
-			System.err.println(accounts);
-			return helper.convert(accounts, AccountProxy.class);
+//			System.err.println(accounts);
+			return helper.convertList(collect, AccountProxy.class);
 		}
 		return null;
+	}
+	
+	public List<Accounts> getAllAccounts()
+	{
+		List<Accounts> account = accRepo.getAccount();
+		return account;
 	}
 
 }
