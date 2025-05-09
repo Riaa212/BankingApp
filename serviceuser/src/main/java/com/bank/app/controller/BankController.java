@@ -37,7 +37,5 @@ public class BankController {
 	{
 		return ResponseEntity.status(HttpStatus.CREATED).body(bankService.getBankByName(name));
 	}
-	
-	
 }
 	

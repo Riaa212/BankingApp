@@ -1,8 +1,10 @@
 package com.bank.app.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.bank.app.domain.UserEntity;
 
@@ -13,4 +15,8 @@ public interface UserRepo extends JpaRepository<UserEntity,Integer>
 
 	@Transactional
 	Optional<UserEntity> findByEmail(String email);
+	
+	@Query(value="select a from UserEntity a where a.requestToAcc=true")
+	List<UserEntity> findUserTocreateAcc();
+	
 }

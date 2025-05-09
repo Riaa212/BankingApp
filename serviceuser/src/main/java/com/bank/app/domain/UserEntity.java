@@ -63,6 +63,8 @@ public class UserEntity {
 	@JoinColumn(name="user_id")
 	private List<Transactions> transcations;
 
+	private Boolean requestToAcc=false;
+	
  //	One-to-many relationship with Account (A user can have multiple bank accounts).
  //	One-to-many relationship with Transaction (A user can have multiple transactions)
 	

@@ -52,8 +52,8 @@ public class AccountServiceImpl implements AccountService
 		if(byId.isPresent())
 		{
 			UserEntity userEntity = byId.get();
-			List<Accounts> accounts = userEntity.getAccounts();
-			return helper.convertList(accounts, AccountProxy.class);
+//			List<Accounts> accounts = userEntity.getAccounts();
+			return helper.convertList(null, AccountProxy.class);
 		}
 		return null;
 	}
@@ -83,11 +83,11 @@ public class AccountServiceImpl implements AccountService
 		{
 			UserEntity userEntity = byId.get();
 //			System.err.println("======="+userEntity);
-			collect = userEntity.
-			getAccounts().
-			stream().
-			filter(a->a.getAccountNumber().equals(accNo)).collect(Collectors.toList());
-			System.err.println("Account Details=="+collect);
+//			collect = userEntity.
+//			getAccounts().
+//			stream().
+//			filter(a->a.getAccountNumber().equals(accNo)).collect(Collectors.toList());
+//			System.err.println("Account Details=="+collect);
 		}
 		
 		if(byAccountNumber.isPresent())
@@ -106,4 +106,9 @@ public class AccountServiceImpl implements AccountService
 		return account;
 	}
 
+	public List<Accounts> getByAccNo(String accNo)
+	{
+		List<Accounts> byAccNo = accRepo.getByAccNo(accNo);
+		return byAccNo;
+	}
 }

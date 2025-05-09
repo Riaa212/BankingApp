@@ -53,6 +53,5 @@ public class BankBranchController {
 	public ResponseEntity<?> deleteBankBranchById(@PathVariable Integer branchId)
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(branchService.deleteBankBranch(branchId));
-	}
-	
+	}	
 }

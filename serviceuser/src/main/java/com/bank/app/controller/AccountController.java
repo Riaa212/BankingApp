@@ -78,11 +78,17 @@ public class AccountController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(acc.totalBalance(accNo));
 	}
 	
+	//inner join on account
 	@GetMapping("/getAllAccount")
 	public ResponseEntity<?> getallAcc()
 	{
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(acc.getAllAccounts());
 	}
 	
-	
+	//get account details by account number
+	@GetMapping("/getByAccNum/{accNum}")
+	public ResponseEntity<?> getByAccNum(@PathVariable String accNum)
+	{
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(acc.getByAccNo(accNum));
+	}
 }
