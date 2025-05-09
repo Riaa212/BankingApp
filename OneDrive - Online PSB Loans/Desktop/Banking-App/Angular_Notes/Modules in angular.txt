@@ -1,0 +1,17 @@
+=======================================================================
+Reactive Forms set-up:
+=======================================================================
+-->Import it in module.ts file:
+   import {ReactiveFormsModule} from '@angular/forms';
+
+-->add in imports[] array:
+      ReactiveFormsModule
+
+=======================================================================
+Http Client Module set-up:
+=======================================================================
+-->Import it in module.ts file:
+   import { HttpClientModule } from '@angular/common/http';
+
+-->add in imports[] array:
+       HttpClientModule,

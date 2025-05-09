@@ -1,0 +1,102 @@
+package com.bank.app.service.impl;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bank.app.domain.Accounts;
+import com.bank.app.domain.UserEntity;
+import com.bank.app.enums.StatusEnum;
+import com.bank.app.helper.Utils;
+import com.bank.app.proxy.AccountProxy;
+import com.bank.app.repository.AccountRepo;
+import com.bank.app.repository.UserRepo;
+import com.bank.app.service.AccountService;
+
+@Service
+public class AccountServiceImpl implements AccountService
+{
+
+	@Autowired
+	private AccountRepo accRepo;
+
+	@Autowired
+	private UserRepo userRepo;
+	
+	@Autowired
+	private Utils helper;
+	
+	
+	@Override
+	public Double totalBalance(String accNo) {
+	 Optional<Accounts> byAccountNumber = accRepo.findByAccountNumber(accNo);
+	 
+	 if(byAccountNumber.isPresent())
+	 {
+		 Accounts accounts = byAccountNumber.get();
+		 return accounts.getBalance();
+	 }
+	 return null;
+	}
+
+	//get account details
+	@Override
+	public List<AccountProxy> getAccountDetails(Integer userId) {
+	
+		Optional<UserEntity> byId = userRepo.findById(userId);
+		
+		if(byId.isPresent())
+		{
+			UserEntity userEntity = byId.get();
+			List<Accounts> accounts = userEntity.getAccounts();
+			return helper.convertList(accounts, AccountProxy.class);
+		}
+		return null;
+	}
+
+	
+	//create account
+	@Override
+	public String createAccount(AccountProxy account) {
+//		account.setAccountNumber(UUID.randomUUID().toString());
+		account.setAccstatus(StatusEnum.Active);
+		account.setBalance(0.0);
+//		account.setAccountType(AccountTypeEnum.Savings);
+		accRepo.save(helper.convert(account, Accounts.class));
+		return "account created successfully";
+	}
+	
+	public AccountProxy getUserByAccountNum(String accNo,Integer userId)
+	{
+		Optional<Accounts> byAccountNumber = accRepo.findByAccountNumber(accNo);
+		
+		List<UserEntity> userlst = userRepo.findAll();
+		System.out.println(userlst);
+
+		Optional<UserEntity> byId = userRepo.findById(userId);
+		
+		if(byId.isPresent())
+		{
+			UserEntity userEntity = byId.get();
+			System.err.println("======="+userEntity);
+			userEntity.getAccounts().stream().filter(a->a.getAccountNumber()==accNo).forEach(ref->System.out.println("ref=="+ref));
+		}
+//		List<List<Accounts>> useracc = userlst.stream().map(a->a.getAccounts()).collect(Collectors.toList());
+//
+//		userlst.stream().map(a->a.getAccounts().stream().filter(res->res.getAccountNumber()==accNo)).forEach(r->System.err.println("result"+r));
+		
+		if(byAccountNumber.isPresent())
+		{
+			Accounts accounts = byAccountNumber.get();
+			
+			System.err.println(accounts);
+			return helper.convert(accounts, AccountProxy.class);
+		}
+		return null;
+	}
+
+}

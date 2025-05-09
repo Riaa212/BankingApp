@@ -1,0 +1,21 @@
+==>Install Bootstrap in angular using cli:
+   -npm i bootstrap
+   
+==>Register in angular.json file:
+  - "styles": [
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+            ],
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" 
+            ]
+
+==>Bootstrap icons installation:
+
+  	 -->Command: 
+	  npm i bootstrap-icons --save
+
+	-->register in angular.json:
+         "bootstrap-icons/font/bootstrap-icons.css"
+-->Install gulp:
+npm install --global gulp-cli

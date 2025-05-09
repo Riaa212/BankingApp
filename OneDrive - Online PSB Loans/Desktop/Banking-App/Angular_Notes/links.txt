@@ -1,0 +1,8 @@
+-->Bootstrap card:
+	https://freefrontend.com/bootstrap-cards/
+
+	https://geeksui.codescandy.com/geeks/docs/card-snippet.html
+
+	https://mdbootstrap.com/docs/standard/components/cards/
+	
+	https://bootsnipp.com/tags/card

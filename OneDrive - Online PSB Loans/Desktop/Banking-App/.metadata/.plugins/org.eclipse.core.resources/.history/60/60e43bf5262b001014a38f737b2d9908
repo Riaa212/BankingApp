@@ -1,0 +1,13 @@
+package com.bank.app.exceptionHandling;
+
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class ExceptionHandler {
+
+	@org.springframework.web.bind.annotation.ExceptionHandler(value=UserNotFound.class)
+	public ErrorResponse userNotFound(UserNotFound userNotFound)
+	{
+		return new ErrorResponse("user not found","403");
+	}
+}

@@ -1,0 +1,34 @@
+-->Configuration:
+==================================================================================
+1.create proxy.config.json file inside project:[it should not in src folder]:
+
+{
+    "/product":{
+        "target":"http://localhost:8082",
+        "secure":false,
+        "changeOrigin":true,
+        "logLevel":"debug"
+    }
+}
+
+==================================================================================
+2.register it in angular.json file inside serve object:
+          "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "apicall:build:production"
+            },
+            "development": {
+              "buildTarget": "apicall:build:development"
+            }
+          },
+	//added this one
+          "options": {   
+            "proxyConfig":"proxy.config.json"
+          },
+          "defaultConfiguration": "development"
+        },
+
+
+

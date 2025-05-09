@@ -1,0 +1,36 @@
+package com.bank.app.repository;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.bank.app.domain.Accounts;
+
+public interface AccountRepo extends JpaRepository<Accounts,Integer>
+{
+	Optional<Accounts> findByAccountNumber(String accNo);
+
+//	SELECT * FROM bank AS b
+//	INNER JOIN 
+//	accounts AS a
+//	ON
+//	b.id=a.id;
+	
+//	SELECT " +
+//    "   a.id AS accountId, " +
+//    "   a.accountNumber, " +
+//    "   a.accountType, " +
+//    "   b.id AS bankId, " +
+//    "   b.bankName, " +
+//    "   b.branchCode " +
+//    "FROM Accounts AS a " +
+//    "INNER JOIN bank AS b ON a.id = b.id
+	
+	
+	@Query(value = "SELECT a.id as bankId as bank_id FROM Accounts AS a INNER JOIN bank AS b ON =b.bankId", nativeQuery = true)
+	List<Accounts> getAccount();
+
+//	@Query(value = "SELECT * FROM Accounts WHERE  accstatus='Active'", nativeQuery = true)
+}

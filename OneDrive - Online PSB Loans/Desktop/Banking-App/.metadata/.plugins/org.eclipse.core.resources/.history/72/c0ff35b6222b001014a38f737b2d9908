@@ -1,0 +1,6 @@
+package com.bank.app.exceptionHandling;
+
+public class ErrorResponse {
+
+	
+}
