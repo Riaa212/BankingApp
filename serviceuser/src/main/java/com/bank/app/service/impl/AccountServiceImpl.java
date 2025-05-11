@@ -2,8 +2,6 @@ package com.bank.app.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +11,7 @@ import com.bank.app.domain.UserEntity;
 import com.bank.app.enums.StatusEnum;
 import com.bank.app.helper.Utils;
 import com.bank.app.proxy.AccountProxy;
+import com.bank.app.proxy.UserProxy;
 import com.bank.app.repository.AccountRepo;
 import com.bank.app.repository.UserRepo;
 import com.bank.app.service.AccountService;
@@ -110,5 +109,16 @@ public class AccountServiceImpl implements AccountService
 	{
 		List<Accounts> byAccNo = accRepo.getByAccNo(accNo);
 		return byAccNo;
+	}
+	
+	public UserProxy getUserById(Integer userId)
+	{
+		Optional<UserEntity> byId = userRepo.findById(userId);
+		if(byId.isPresent())
+		{	
+			UserEntity userEntity = byId.get();
+			return helper.convert(userEntity, UserProxy.class);
+		}
+		return null;
 	}
 }
