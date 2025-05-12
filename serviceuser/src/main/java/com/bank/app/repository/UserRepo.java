@@ -19,4 +19,8 @@ public interface UserRepo extends JpaRepository<UserEntity,Integer>
 	@Query(value="select a from UserEntity a where a.requestToAcc=true")
 	List<UserEntity> findUserTocreateAcc();
 	
+//	@Query(value="select a from UserEntity a ORDER BY a limit 5")
+//	List<UserEntity> findAll();
+	
+	
 }

@@ -31,7 +31,6 @@ public class UserController {
 	@PostMapping("/register")
 	public ResponseEntity<?> createUser(@RequestBody UserProxy user)
 	{
-		
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.createUser(user));
 	}
 	
@@ -47,6 +46,5 @@ public class UserController {
 	{
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.updateUser(user, userId));
 	}
-	
 	
 }

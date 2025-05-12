@@ -38,7 +38,6 @@ public class BankServiceImpl implements BankService
 	@Override
 	public String RegisterBank(BankProxy bank) {
 		
-		
 		BankBranch branch=new BankBranch();
 		
 		//generate IFSC code
@@ -52,15 +51,17 @@ public class BankServiceImpl implements BankService
 		branch.setBranchAddress(bank.getLocation());
 		branch.setBank(bankObj);
 		branchRepo.save(branch);
-//		System.err.println(bankObj);
+		//System.err.println(bankObj);
 		return "Bank register successfully";
 	}
 
+	//get all banks
 	public List<BankProxy> getAllBanks()
 	{
 		List<Bank> allBank = bankRepo.findAll();
 		return helper.convertList(allBank,BankProxy.class);
 	}
+	
 	
 	public BankProxy getBankByName(String bankName)
 	{
@@ -73,11 +74,24 @@ public class BankServiceImpl implements BankService
 		return null;
 	}
 	
+	
 	public String deleteAllBank()
 	{
 		accRepo.deleteAll();
 		branchRepo.deleteAll();
 		bankRepo.deleteAll();
 		return "deleted successfully";
+	}
+	
+	
+	public BankProxy getBankById(Integer id)
+	{
+		Optional<Bank> byBankId = bankRepo.findById(id);
+		if(byBankId.isPresent())
+		{
+			Bank bank = byBankId.get();
+			return helper.convert(bank, BankProxy.class);
+		}
+		return null;
 	}
 }

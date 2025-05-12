@@ -27,7 +27,8 @@ public class AccountProxy {
 	
 	private Bank bank; 
 	
-	private UserEntity user;
+//	private UserEntity user;
+	
 //	Many-to-one relationship with User (An account belongs to a single user).
 //	One-to-many relationship with Transaction (An account will have many transactions).
 }

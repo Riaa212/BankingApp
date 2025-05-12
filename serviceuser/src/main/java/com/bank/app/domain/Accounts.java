@@ -17,7 +17,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -51,7 +50,7 @@ public class Accounts {
 	@OneToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="bank_id")
 	private Bank bank; 
-	
+
 	
 //	@ManyToOne(cascade=CascadeType.ALL)
 //	@JoinColumn(name="user_id")

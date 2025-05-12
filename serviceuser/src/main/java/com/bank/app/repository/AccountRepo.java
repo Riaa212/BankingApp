@@ -15,18 +15,18 @@ public interface AccountRepo extends JpaRepository<Accounts,Integer>
 
 //		@Query(value="select a from Accounts a inner join a.bank b inner join a.user u")
 		
+		//JPQL
 		//get common data 
 		@Query(value="select a from Accounts a inner join a.bank b")
 		List<Accounts> getAccount();
+		
 		
 		@Query(value="select a from Accounts a inner join a.bank b where a.accountNumber=:accNo")
 		List<Accounts> getByAccNo(@Param("accNo") String accNo);
 
 		
-		
-		
-		
-		
+		@Query(value="select a from Accounts a ORDER BY a limit 5")
+		List<Accounts> getAllAccounts();
 }
 
 //--> Join multiple table 

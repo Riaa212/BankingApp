@@ -2,6 +2,7 @@ package com.bank.app.proxy;
 
 import java.time.LocalDate;
 
+import com.bank.app.domain.Accounts;
 import com.bank.app.enums.TransactionStatus;
 import com.bank.app.enums.TransactionType;
 
@@ -29,6 +30,8 @@ private Integer id;
 	private TransactionStatus transactionStatus;
 	
 	private LocalDate transactionDate;
+	
+	private Accounts account;
 	
 	private String description;
 	

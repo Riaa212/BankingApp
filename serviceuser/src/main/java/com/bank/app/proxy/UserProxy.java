@@ -30,7 +30,7 @@ public class UserProxy {
 	private StatusEnum status;
 	
 	//one user can have multiple accounts
-//	private List<Accounts> accounts;
+	//private List<Accounts> accounts;
 	
 	private Boolean requestToAcc=false;
 	

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.bank.app.domain.Accounts;
 import com.bank.app.domain.UserEntity;
 import com.bank.app.enums.StatusEnum;
+import com.bank.app.exceptionHandling.UserNotFound;
 import com.bank.app.helper.AccNumberGenerator;
 import com.bank.app.helper.Utils;
 import com.bank.app.proxy.UserProxy;
@@ -49,6 +50,7 @@ public class UserServiceImpl implements UserService{
 		System.err.println(user);
 		
 		Optional<UserEntity> byEmail = userRepo.findByEmail(user.getEmail());
+				//.orElseThrow(new UserNotFound("user not found.."));
 		
 		if(byEmail.isPresent())
 		{

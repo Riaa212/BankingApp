@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.bank.app.enums.TransactionStatus;
 import com.bank.app.enums.TransactionType;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -15,6 +16,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,9 +46,18 @@ public class Transactions {
 	@Enumerated(EnumType.STRING)
 	private TransactionStatus transactionStatus;
 	
+	@CreationTimestamp
+	@Column(nullable = false, updatable = false)
 	private LocalDate transactionDate;
 	
 	private String description;
+	
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="acc_id")
+	private Accounts account;
+
+	
 	
 	@CreationTimestamp
 	@Column(nullable = false, updatable = false)
@@ -54,9 +66,7 @@ public class Transactions {
 	@UpdateTimestamp
 	private LocalDate updatedAt;
 	
-	
-	
-	
+
 //	Many-to-one relationship with Account (A transaction involves one or more accounts).
 //	Many-to-one relationship with User (A transaction is associated with users).
 }

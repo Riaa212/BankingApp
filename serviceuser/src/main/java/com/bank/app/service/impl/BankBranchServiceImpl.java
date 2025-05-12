@@ -110,7 +110,7 @@ public class BankBranchServiceImpl implements BankBranchService
 			//filter the bank branches
 			List<BankBranch> bankBranch = all.stream().filter(a->a.getBank().getId()==bankObj.getId()).collect(Collectors.toList());
 			
-			System.err.println("Result===>"+bankBranch);
+//			System.err.println("Result===>"+bankBranch);
 			return helper.convertList(bankBranch, BankBranchProxy.class);
 			
 		}

@@ -105,6 +105,7 @@ public class AccountServiceImpl implements AccountService
 		return account;
 	}
 
+	//get accounts 
 	public List<Accounts> getByAccNo(String accNo)
 	{
 		List<Accounts> byAccNo = accRepo.getByAccNo(accNo);
@@ -120,5 +121,11 @@ public class AccountServiceImpl implements AccountService
 			return helper.convert(userEntity, UserProxy.class);
 		}
 		return null;
+	}
+	
+	public List<AccountProxy> getAllUserAccount()
+	{
+			List<Accounts> allAccounts = accRepo.getAllAccounts();
+	        return helper.convertList(allAccounts, AccountProxy.class);
 	}
 }

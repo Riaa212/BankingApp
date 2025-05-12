@@ -35,6 +35,7 @@ public class AccountController {
 	
 	@Autowired
 	private AccNumberGenerator accGen;
+
 	
 	//transaction service
 	@Autowired
@@ -54,8 +55,8 @@ public class AccountController {
 	}
 	
 	//withdrawal money
-	@PostMapping("/withdrawal") //working
-	public ResponseEntity<?> withdrawal(String accNo,Double amount)
+	@PostMapping("/withdrawal/{accNo}/{amount}") //working
+	public ResponseEntity<?> withdrawal(@PathVariable("accNo") String accNo,@PathVariable("amount") Double amount)
 	{		
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(transService.Withdrawal(amount, accNo));
 	}
@@ -100,4 +101,15 @@ public class AccountController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(acc.getUserById(userId));
 	}
 	
+	@GetMapping("/getAllTransactions")
+	public ResponseEntity<?> getAllTransactions()
+	{
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(transService.getAllTransactions());
+	}
+	
+	@GetMapping("/getAllUserAccount")
+	public ResponseEntity<?> getAllUserAccounts()
+	{
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(acc.getAllUserAccount());
+	}
 }

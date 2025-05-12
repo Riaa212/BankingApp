@@ -59,9 +59,9 @@ public class UserEntity {
 	
 	//one user can have multiple transactions
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="user_id")
-	private List<Transactions> transcations;
+//	@OneToMany(cascade=CascadeType.ALL)
+//	@JoinColumn(name="user_id")
+//	private List<Transactions> transcations;
 
 	private Boolean requestToAcc=false;
 	
