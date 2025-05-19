@@ -112,6 +112,8 @@ public class UserServiceImpl implements UserService{
 	public String updateUser(UserProxy user, Integer id) {
 		Optional<UserEntity> userById = userRepo.findById(id);
 		
+		UserEntity userNotFound = userById.orElseThrow(()->new UserNotFound("UserNot Found.."));
+	
 		if(userById.isPresent())
 		{
 			UserEntity userEntity = userById.get();
