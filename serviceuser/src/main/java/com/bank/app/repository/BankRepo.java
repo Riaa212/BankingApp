@@ -10,4 +10,5 @@ public interface BankRepo extends JpaRepository<Bank,Integer>
 {
 	
 	Optional<Bank> findByBankName(String bankName);
+
 }

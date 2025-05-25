@@ -1,5 +1,8 @@
 package com.bank.app.controller;
 
+import java.io.InputStream;
+import java.time.LocalDate;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,15 +12,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.bank.app.domain.TransactionFilterRequest;
+import com.bank.app.domain.Transactions;
 import com.bank.app.helper.AccNumberGenerator;
 import com.bank.app.proxy.AccountProxy;
 import com.bank.app.repository.BankBranchRepo;
+import com.bank.app.repository.TransactionRepo;
 import com.bank.app.service.BankBranchService;
 import com.bank.app.service.impl.AccountServiceImpl;
 import com.bank.app.service.impl.TransactionServiceImpl;
-
 @RestController
 @RequestMapping("/account")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -36,6 +43,9 @@ public class AccountController {
 	@Autowired
 	private AccNumberGenerator accGen;
 
+	
+	@Autowired
+	private TransactionRepo trepo;
 	
 	//transaction service
 	@Autowired
@@ -112,4 +122,13 @@ public class AccountController {
 	{
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(acc.getAllUserAccount());
 	}
+	
+	
+	 @PostMapping("/filter")
+	  public ResponseEntity<?> filterTransactions(@RequestBody TransactionFilterRequest request) {
+	        List<Transactions> filtered = transService.getTransactionsByDate(request);
+	        return ResponseEntity.ok(filtered);
+	  }
+	  
+
 }

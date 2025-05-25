@@ -1,5 +1,6 @@
 package com.bank.app.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bank.app.domain.Accounts;
+import com.bank.app.domain.TransactionFilterRequest;
 import com.bank.app.domain.Transactions;
 import com.bank.app.enums.TransactionStatus;
 import com.bank.app.enums.TransactionType;
@@ -110,4 +112,11 @@ public class TransactionServiceImpl implements TransactionService
 		List<Transactions> all = transRepo.findAll();
 		return helper.convertList(all, TransactionsProxy.class);
 	}
+	
+	  public List<Transactions> getTransactionsByDate(TransactionFilterRequest req) {
+	        LocalDate from = req.getFromDate() != null ? LocalDate.parse(req.getFromDate()) : LocalDate.MIN;
+	        LocalDate to = req.getToDate() != null ? LocalDate.parse(req.getToDate()) : LocalDate.now();
+
+	        return transRepo.findByTransactionDateBetween(from, to);
+	    }
 }

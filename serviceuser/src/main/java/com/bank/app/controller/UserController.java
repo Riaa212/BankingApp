@@ -16,7 +16,7 @@ import com.bank.app.proxy.UserProxy;
 import com.bank.app.service.impl.UserServiceImpl;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 public class UserController {
 
 	@Autowired
