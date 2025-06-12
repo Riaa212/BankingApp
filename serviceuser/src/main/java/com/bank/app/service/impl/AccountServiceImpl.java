@@ -128,4 +128,21 @@ public class AccountServiceImpl implements AccountService
 			List<Accounts> allAccounts = accRepo.getAllAccounts();
 	        return helper.convertList(allAccounts, AccountProxy.class);
 	}
+	
+	public String frezeeAcc(String accNo)
+	{
+		Optional<Accounts> byAccountNumber = accRepo.findByAccountNumber(accNo);
+		
+		if(byAccountNumber.isPresent())
+		{
+			Accounts accounts = byAccountNumber.get();
+			
+			accounts.setFreeze(true);
+			accounts.setAccstatus(StatusEnum.Frezee);
+			
+			accRepo.save(accounts);
+			return "account freeze successfully";
+		}
+		return null;
+	}
 }

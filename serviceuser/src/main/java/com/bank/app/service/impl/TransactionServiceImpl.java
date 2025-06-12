@@ -82,28 +82,39 @@ public class TransactionServiceImpl implements TransactionService
 		if(byAccountNumber.isPresent())
 		{
 			Accounts accounts = byAccountNumber.get();
-			
-			Transactions trans=new Transactions();
-			if(amount<0)
+		
+			if(accounts.getFreeze().equals(false))
 			{
-				return "Invalid Amount";
+				Transactions trans=new Transactions();
+				if(amount<0)
+				{
+					return "Invalid Amount";
+				}
+				
+				if(amount>accounts.getBalance())
+				{
+					return "You can't widthaw money";
+				}
+				trans.setAccount(accounts);
+				trans.setTransactionType(TransactionType.Withdrawal);
+				trans.setAmount(amount);
+//				accounts.getBalance()=accounts.getBalance()-amount;
+				
+				accounts.setBalance(accounts.getBalance()-amount);
+				System.err.println(accounts.getBalance());
+				accRepo.save(accounts);
+				trans.setTransactionStatus(TransactionStatus.Success);
+				transRepo.save(trans);
 			}
-			
-			if(amount>accounts.getBalance())
+			else 
 			{
-				return "You can't widthaw money";
+				return "you can't widthdraw money....";
 			}
-			trans.setAccount(accounts);
-			trans.setTransactionType(TransactionType.Withdrawal);
-			trans.setAmount(amount);
-//			accounts.getBalance()=accounts.getBalance()-amount;
-			
-			accounts.setBalance(accounts.getBalance()-amount);
-			System.err.println(accounts.getBalance());
-			accRepo.save(accounts);
-			trans.setTransactionStatus(TransactionStatus.Success);
-			transRepo.save(trans);
 		}
+//		else 
+//		{
+//			return "something went wrong please try again..";
+//		}
 		return null;
 	}
 

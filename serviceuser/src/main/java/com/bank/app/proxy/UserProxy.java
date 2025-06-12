@@ -38,5 +38,9 @@ public class UserProxy {
 	private List<Transactions> transcations;
 	
 	private List<Accounts> accounts;
+	
+    private String nameEncrypted;
+	
+    private String nameDecrypted;
 
 }

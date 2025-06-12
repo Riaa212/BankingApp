@@ -46,5 +46,11 @@ public class UserController {
 	{
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.updateUser(user, userId));
 	}
+
+	@GetMapping("/getUser/{userId}")
+	public ResponseEntity<?> getUserById(@PathVariable Integer userId)
+	{
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.getUser(userId));
+	}
 	
 }

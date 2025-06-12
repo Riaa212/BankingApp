@@ -10,6 +10,7 @@ import com.bank.app.domain.Accounts;
 import com.bank.app.domain.UserEntity;
 import com.bank.app.enums.StatusEnum;
 import com.bank.app.exceptionHandling.UserNotFound;
+import com.bank.app.helper.AESUtils;
 import com.bank.app.helper.AccNumberGenerator;
 import com.bank.app.helper.Utils;
 import com.bank.app.proxy.UserProxy;
@@ -70,8 +71,8 @@ public class UserServiceImpl implements UserService{
 		});
 //		createUserBankAccount();
 		user.setRequestToAcc(true);
+//		user.setNameDecrypted(AESUtils.decrypt(user.getNameEncrypted()));
 		userRepo.save(helper.convert(user, UserEntity.class));
-		
 		return "user Register successfully";
 	}
 
@@ -141,4 +142,17 @@ public class UserServiceImpl implements UserService{
 		}
 		return "something went wrong";
 	}
+	
+	public void saveUser(UserEntity user) {
+	    user.setNameEncrypted(AESUtils.encrypt(user.getNameDecrypted()));
+	    userRepo.save(user);
+	}
+	
+	public UserEntity getUser(Integer id) {
+	    UserEntity user = userRepo.findById(id).get();
+	    user.setNameDecrypted(AESUtils.decrypt(user.getNameEncrypted()));
+	    return user;
+	}
+
+
 }

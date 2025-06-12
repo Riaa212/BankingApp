@@ -8,6 +8,7 @@ public class AccNumberGenerator {
 	private static final String BANK_CODE = "123";
     private static final String BRANCH_CODE = "001";
 
+    
     // Ideally, this sequence should come from a database or Redis to be globally unique
     private final AtomicLong sequence = new AtomicLong(100000); // starts from 100000
   

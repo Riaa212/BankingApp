@@ -51,6 +51,7 @@ public class Accounts {
 	@JoinColumn(name="bank_id")
 	private Bank bank; 
 
+	private Boolean freeze=false;
 	
 //	@ManyToOne(cascade=CascadeType.ALL)
 //	@JoinColumn(name="user_id")

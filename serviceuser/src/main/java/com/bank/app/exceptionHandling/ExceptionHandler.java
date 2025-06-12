@@ -17,10 +17,10 @@ public class ExceptionHandler {
 	}
 	
 	//global exception
-	@org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
-	    public ResponseEntity<?> handleGeneralException(Exception ex) {
-	        Map<String, String> error = new HashMap<>();
-	        error.put("error", "Internal Server Error");
-	        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-	    }
+//	@org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
+//	    public ResponseEntity<?> handleGeneralException(Exception ex) {
+//	        Map<String, String> error = new HashMap<>();
+//	        error.put("error", "Internal Server Error");
+//	        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+//	    }
 }
